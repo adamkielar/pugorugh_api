@@ -27,4 +27,4 @@ USER user
 COPY ./backend /backend
 
 # run entrypoint.sh
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/backend/entrypoint.sh"]
