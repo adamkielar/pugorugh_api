@@ -5,7 +5,9 @@
     "breed": "Labrador",
     "age": 72,
     "gender": "f",
-    "size": "l"
+    "size": "l",
+    "pedigree": "y",
+    "fur": "s"
   },
   {
     "name": "Hank",
@@ -13,7 +15,9 @@
     "breed": "French Bulldog",
     "age": 14,
     "gender": "m",
-    "size": "s"
+    "size": "s",
+    "pedigree": "y",
+    "fur": "s"
   },
   {
     "name": "Muffin",
@@ -21,7 +25,9 @@
     "breed": "Boxer",
     "age": 24,
     "gender": "f",
-    "size": "xl"
+    "size": "xl",
+    "pedigree": "n",
+    "fur": "s"
   },
   {
     "name": "Bjorn",
@@ -29,7 +35,9 @@
     "breed": "Swedish Vallhund",
     "age": 36,
     "gender": "m",
-    "size": "m"
+    "size": "m",
+    "pedigree": "n",
+    "fur": "l"
   },
   {
     "name": "Hercules",
@@ -37,7 +45,9 @@
     "breed": "Chihuahua",
     "age": 96,
     "gender": "m",
-    "size": "s"
+    "size": "s",
+    "pedigree": "y",
+    "fur": "s"
   },
   {
     "name": "Pez",
@@ -45,7 +55,9 @@
     "breed": "Unknown Mix",
     "age": 3,
     "gender": "m",
-    "size": "m"
+    "size": "m",
+    "pedigree": "n",
+    "fur": "s"
   },
   {
     "name": "Cocoa",
@@ -53,7 +65,9 @@
     "breed": "Chocolate Labrador Mix",
     "age": 60,
     "gender": "f",
-    "size": "l"
+    "size": "l",
+    "pedigree": "y",
+    "fur": "s"
   },
   {
     "name": "Lord Barkley",
@@ -61,7 +75,9 @@
     "breed": "English Bulldog",
     "age": 26,
     "gender": "m",
-    "size": "m"
+    "size": "m",
+    "pedigree": "y",
+    "fur": "s"
   },
   {
     "name": "Sandy",
@@ -69,7 +85,9 @@
     "breed": "Goldendoodle",
     "age": 14,
     "gender": "f",
-    "size": "l"
+    "size": "l",
+    "pedigree": "n",
+    "fur": "s"
   },
   {
     "name": "Cookie",
@@ -77,7 +95,9 @@
     "breed": "Golden Spaniel Mix",
     "age": 48,
     "gender": "f",
-    "size": "m"
+    "size": "m",
+    "pedigree": "n",
+    "fur": "l"
   },
   {
     "name": "Custard",
@@ -85,7 +105,9 @@
     "breed": "Yellow Lab",
     "age": 84,
     "gender": "m",
-    "size": "l"
+    "size": "l",
+    "pedigree": "y",
+    "fur": "s"
   },
   {
     "name": "Captain Jack",
@@ -93,7 +115,9 @@
     "breed": "Pug Mix",
     "age": 66,
     "gender": "m",
-    "size": "s"
+    "size": "s",
+    "pedigree": "n",
+    "fur": "s"
   },
   {
     "name": "Gypsy",
@@ -101,7 +125,9 @@
     "breed": "Golden Retriever",
     "age": 30,
     "gender": "f",
-    "size": "l"
+    "size": "l",
+    "pedigree": "y",
+    "fur": "s"
   },
   {
     "name": "Bella",
@@ -109,7 +135,9 @@
     "breed": "Collie",
     "age": 14,
     "gender": "f",
-    "size": "l"
+    "size": "l",
+    "pedigree": "y",
+    "fur": "l"
   },
   {
     "name": "Gizmo",
@@ -117,14 +145,19 @@
     "breed": "English Springer Spaniel",
     "age": 78,
     "gender": "m",
-    "size": "l"
+    "size": "l",
+    "pedigree": "y",
+    "fur": "l"
   },
   {
     "name": "Prince",
     "image_filename": "16.jpg",
+    "breed": "Yorkshire Terrier",
     "age": 81,
     "gender": "m",
-    "size": "s"
+    "size": "s",
+    "pedigree": "n",
+    "fur": "s"
   },
   {
     "name": "Sadie",
@@ -132,7 +165,9 @@
     "breed": "Springer Spaniel",
     "age": 50,
     "gender": "f",
-    "size": "l"
+    "size": "l",
+    "pedigree": "y",
+    "fur": "l"
   },
   {
     "name": "Zumba",
@@ -140,7 +175,9 @@
     "breed": "Yorkshire Terrier",
     "age": 11,
     "gender": "m",
-    "size": "s"
+    "size": "s",
+    "pedigree": "n",
+    "fur": "s"
   },
   {
     "name": "Elsa",
@@ -148,6 +185,8 @@
     "breed": "Husky",
     "age": 2,
     "gender": "f",
-    "size": "m"
+    "size": "m",
+    "pedigree": "y",
+    "fur": "l"
   }
 ]

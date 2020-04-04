@@ -1,15 +1,17 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from . import choices
 
 
 class Dog(models.Model):
-    name = models.CharField(max_length=250)
-    description = models.TextField()
-    image_filename = models.ImageField(upload_to="images/dogs/")
-    breed = models.CharField(max_length=250)
-    age = models.IntegerField(blank=True)
+    name = models.CharField(max_length=255, blank=False)
+    description = models.TextField(blank=True)
+    image_filename = models.CharField(max_length=255, blank=True)
+    breed = models.CharField(max_length=255, blank=False)
+    age = models.IntegerField(blank=False)
     gender = models.CharField(max_length=1, choices=choices.GENDER_CHOICES)
     size = models.CharField(max_length=2, choices=choices.SIZE_CHOICES)
     pedigree = models.CharField(max_length=1, choices=choices.PEDIGREE_CHOICES)
@@ -23,6 +25,16 @@ class UserPref(models.Model):
     size = models.CharField(max_length=2, choices=choices.SIZE_CHOICES)
     pedigree = models.CharField(max_length=1, choices=choices.PEDIGREE_CHOICES)
     fur = models.CharField(max_length=1, choices=choices.FUR_CHOICES)
+
+@receiver(post_save, sender=User)
+def create_user_userpref(sender, instance, created, **kwargs):
+    if created:
+        UserPref.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_userpref(sender, instance, **kwargs):
+    instance.userpref.save()
 
 
 class UserDog(models.Model):
