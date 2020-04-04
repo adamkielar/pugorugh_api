@@ -4,7 +4,9 @@ var Preferences = React.createClass({
   data: {
     age: new Set(['b', 'y', 'a', 's']),
     gender: new Set(['m', 'f']),
-    size: new Set(['s', 'm', 'l', 'xl'])
+    size: new Set(['s', 'm', 'l', 'xl']),
+    pedigree: new Set(['y', 'n']),
+    fur: new Set(['l', 's'])
   },
   getInitialState: function () {
     return { data: this.data };
@@ -19,7 +21,9 @@ var Preferences = React.createClass({
       this.data = {
         age: new Set(data.age ? data.age.split(",") : ['b', 'y', 'a', 's']),
         gender: new Set(data.gender ? data.gender.split(",") : ['m', 'f']),
-        size: new Set(data.size ? data.size.split(",") : ['s', 'm', 'l', 'xl'])
+        size: new Set(data.size ? data.size.split(",") : ['s', 'm', 'l', 'xl']),
+        pedigree: new Set(data.pedigree ? data.pedigree.split(",") : ['y', 'n']),
+        fur: new Set(data.fur ? data.fur.split(",") : ['l', 's'])
       };
       this.setState({ data: this.data });
     }.bind(this));
@@ -34,7 +38,9 @@ var Preferences = React.createClass({
     var json = JSON.stringify({
       age: Array.from(this.data.age).join(','),
       gender: Array.from(this.data.gender).join(','),
-      size: Array.from(this.data.size).join(',')
+      size: Array.from(this.data.size).join(','),
+      pedigree: Array.from(this.data.pedigree).join(','),
+      fur: Array.from(this.data.fur).join(','),
     });
 
     $.ajax({
@@ -74,6 +80,20 @@ var Preferences = React.createClass({
         checkboxes: [{ label: "Small", value: "s" }, { label: "Medium", value: "m" }, { label: "Large", value: "l" }, { label: "Extra Large", value: "xl" }],
         data: this.state.data.size,
         onChange: this.handleCheckboxGroupDataChanged.bind(this, 'size'),
+        atLeastOne: true
+      }),
+      React.createElement(CheckboxGroup, {
+        title: 'Pedigree',
+        checkboxes: [{ label: "Yes", value: "y" }, { label: "No", value: "n" }],
+        data: this.state.data.pedigree,
+        onChange: this.handleCheckboxGroupDataChanged.bind(this, 'pedigree'),
+        atLeastOne: true
+      }),
+      React.createElement(CheckboxGroup, {
+        title: 'Fur',
+        checkboxes: [{ label: "Long", value: "l" }, { label: "Short", value: "s" }],
+        data: this.state.data.fur,
+        onChange: this.handleCheckboxGroupDataChanged.bind(this, 'fur'),
         atLeastOne: true
       }),
       React.createElement('hr', null),

@@ -1,15 +1,15 @@
 GENDER_CHOICES = (
-    ('m', 'Male'),
-    ('f', 'Female'),
-    ('u', 'Unknown'),
+    ('m', 'male'),
+    ('f', 'female'),
+    ('u', 'unknown'),
 )
 
 SIZE_CHOICES = (
-    ('s', 'Small'),
-    ('m', 'Medium'),
-    ('l', 'Large'),
-    ('xl', 'Extra Large'),
-    ('u', 'Unknown'),
+    ('s', 'small'),
+    ('m', 'medium'),
+    ('l', 'large'),
+    ('xl', 'extra large'),
+    ('u', 'unknown'),
 )
 
 STATUS_CHOICES = (
@@ -18,18 +18,18 @@ STATUS_CHOICES = (
 )
 
 AGE_CHOICES = (
-    ('b', 'Baby'),
-    ('y', 'Young'),
-    ('a', 'Adult'),
-    ('s', 'Senior'),
+    ('b', 'baby'),
+    ('y', 'young'),
+    ('a', 'adult'),
+    ('s', 'senior'),
 )
 
 PEDIGREE_CHOICES = (
-    ('y', 'Yes'),
-    ('n', 'No'),
+    ('y', 'yes'),
+    ('n', 'no'),
 )
 
 FUR_CHOICES = (
-    ('l', 'Long'),
-    ('s', 'Short'),
+    ('l', 'long'),
+    ('s', 'short'),
 )

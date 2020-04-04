@@ -55,6 +55,8 @@ var Dog = React.createClass({
   },
   genderLookup: { m: 'Male', f: 'Female' },
   sizeLookup: { s: 'Small', m: 'Medium', l: 'Large', xl: 'Extra Large' },
+  pedigreeLookup: { y: 'Yes', n: 'No' },
+  furLookup: { l: 'Long', s: 'Short' },
   dogControls: function () {
     var like = React.createElement(
       "a",
