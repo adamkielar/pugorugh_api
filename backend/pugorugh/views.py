@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 
+from rest_framework import authentication
 from rest_framework import generics
 from rest_framework import mixins
 from rest_framework import permissions
 from rest_framework import viewsets
+from rest_framework.response import Response
 
 from . import models
 from . import serializers
@@ -20,7 +22,9 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
     """
     api/user/preferences/
     """
+
     permission_classes = [permissions.IsAuthenticated]
+    authentication_class = [authentication.TokenAuthentication]
     queryset = models.UserPref.objects.all()
     serializer_class = serializers.UserPrefSerializer
 
@@ -28,12 +32,9 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
         userpref = self.get_queryset().filter(user=self.request.user).first()
         return userpref
 
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
 
-class UserDogStatusUpdateView(generics.RetrieveUpdateAPIView):
-    """
-    Endpoint: /api/dog/<int:pk>/<status>  (liked or disliked)
-    """
-    pass
 
 class DogListView(generics.ListCreateAPIView):
     """
@@ -45,36 +46,13 @@ class DogListView(generics.ListCreateAPIView):
     serializer_class = serializers.DogSerializer
 
 
-class DogRetrieve(generics.RetrieveUpdateAPIView):
-    """
-    Endpoint: api/dog/<int:pk>/<dogstatus:status>/next/
-    """
-
-    permission_classes = [permissions.IsAuthenticated]
-    serializer_class = serializers.DogSerializer
-
-    def get_queryset(self):
-        status = self.kwargs.get['status'][0]
-        userpref = models.UserPref.objects.get(user=self.request.user)
-        dogs = models.Dog.objects.filter(Q(gender__in=userpref.gender.split(',')))
-
-        if status == 'u':
-            unset_dogs = dogs.exclude(dog_user__user_id__exact=self.request.user.id)
-            return unset_dogs
-
-    def get_object(self):
-        unset_dogs = self.get_queryset()
-        #dog = queryset.filter(id__gt=self.kwargs.get('pk'))[0]
-        if unset_dogs:
-            return unset_dogs.first()
-
-        
-
 class CreateDogView(generics.CreateAPIView):
     """
     Endpoint: /api/dog/add
     """
+
     permission_class = [permissions.IsAuthenticated]
+    authentication_class = [authentication.TokenAuthentication]
     serializer_class = serializers.DogSerializer
 
     def perform_create(self, serializer):
@@ -85,13 +63,29 @@ class DeleteDogView(generics.DestroyAPIView):
     """
     Endpoint: /api/dog/<int:pk>/delete
     """
+
     permission_class = [permissions.IsAuthenticated]
+    authentication_class = [authentication.TokenAuthentication]
     serializer_class = serializers.DogSerializer
 
     def perform_destroy(self, instance):
         instance.delete()
 
-    
+
+class UserDogStatusUpdateView(generics.RetrieveUpdateAPIView):
+    """
+    Endpoint: /api/dog/<int:pk>/<status>  (liked or disliked)
+    """
+
+    permission_class = [permissions.IsAuthenticated]
+    authentication_class = [authentication.TokenAuthentication]
+    serializer_class = serializers.DogSerializer
 
 
+class DogRetrieve(generics.RetrieveUpdateAPIView):
+    """
+    Endpoint: api/dog/<int:pk>/<dogstatus:status>/next/
+    """
 
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.DogSerializer
