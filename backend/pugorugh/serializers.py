@@ -47,6 +47,7 @@ class DogSerializer(serializers.ModelSerializer):
             'image_filename',
             'breed',
             'age',
+            'age_letter',
             'gender',
             'size',
             'pedigree',
@@ -54,3 +55,14 @@ class DogSerializer(serializers.ModelSerializer):
         )
 
         model = models.Dog
+
+
+class UserDogSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'user',
+            'dog',
+            'status',
+        )
+
+        model = models.UserDog
