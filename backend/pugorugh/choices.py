@@ -15,6 +15,7 @@ SIZE_CHOICES = (
 STATUS_CHOICES = (
     ('l', 'linked'),
     ('d', 'disliked'),
+    ('u', 'undecided'),
 )
 
 AGE_CHOICES = (
