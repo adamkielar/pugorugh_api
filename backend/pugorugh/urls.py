@@ -1,4 +1,4 @@
-from django.urls import path, register_converter
+from django.urls import path, re_path
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
@@ -6,10 +6,8 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken.views import obtain_auth_token
 
 from . import views
-from . import converters
 
 
-register_converter(converters.UserDogStatusConverter, "dogstatus")
 # API endpoints
 urlpatterns = format_suffix_patterns(
     [
@@ -21,13 +19,13 @@ urlpatterns = format_suffix_patterns(
             name="preferences",
         ),
         path("api/dog/", views.DogListView.as_view(), name="dog-list"),
-        path(
-            "api/dog/<int:pk>/<dogstatus:status>",
+        re_path(
+            r"^api/dog/(?P<pk>-?\d+)/(?P<status>liked|disliked|undecided)/$",
             views.UserDogStatusUpdateView.as_view(),
             name="dog-update",
         ),
-        path(
-            "api/dog/<int:pk>/<dogstatus:status>/next/",
+        re_path(
+            r"^api/dog/(?P<pk>-?\d+)/(?P<status>liked|disliked|undecided)/next/$",
             views.DogRetrieve.as_view(),
             name="dog-retrieve",
         ),

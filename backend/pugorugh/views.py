@@ -89,3 +89,4 @@ class DogRetrieve(generics.RetrieveUpdateAPIView):
 
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.DogSerializer
+    queryset = models.Dog.objects.all()
