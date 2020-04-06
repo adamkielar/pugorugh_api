@@ -29,7 +29,7 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
     """
 
     permission_classes = [permissions.IsAuthenticated]
-    authentication_class = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.TokenAuthentication]
     queryset = models.UserPref.objects.all()
     serializer_class = serializers.UserPrefSerializer
 
@@ -46,7 +46,7 @@ class DogListView(generics.ListCreateAPIView):
     Endpoint: /api/dog/
     """
 
-    permission_class = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = models.Dog.objects.all()
     serializer_class = serializers.DogSerializer
 
@@ -56,8 +56,8 @@ class CreateDogView(generics.CreateAPIView):
     Endpoint: /api/dog/add
     """
 
-    permission_class = [permissions.IsAuthenticated]
-    authentication_class = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.TokenAuthentication]
     serializer_class = serializers.DogSerializer
 
     def perform_create(self, serializer):
@@ -69,8 +69,8 @@ class DeleteDogView(generics.DestroyAPIView):
     Endpoint: /api/dog/<int:pk>/delete
     """
 
-    permission_class = [permissions.IsAuthenticated]
-    authentication_class = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.TokenAuthentication]
     serializer_class = serializers.DogSerializer
 
     def perform_destroy(self, instance):
@@ -82,8 +82,8 @@ class UserDogStatusUpdateView(generics.UpdateAPIView):
     Endpoint: /api/dog/<int:pk>/<status>  (liked or disliked)
     """
 
-    permission_class = [permissions.IsAuthenticated]
-    authentication_class = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.TokenAuthentication]
     queryset = models.UserDog.objects.all()
     serializer_class = serializers.UserDogSerializer
 
@@ -108,8 +108,8 @@ class DogRetrieve(generics.RetrieveUpdateAPIView):
     Endpoint: api/dog/<int:pk>/<status>/next/
     """
 
-    permission_class = [permissions.IsAuthenticated]
-    authentication_class = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.TokenAuthentication]
     queryset = models.Dog.objects.all()
     serializer_class = serializers.DogSerializer
 
