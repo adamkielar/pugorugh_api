@@ -46,7 +46,6 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
         )
         for dog in dogs:
             userdog = models.UserDog.objects.get_or_create(user=self.request.user, dog=dog, status='u')
-            userdog.save()
         return userpref
 
 
