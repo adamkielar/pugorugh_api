@@ -108,7 +108,7 @@ class DogRetrieve(generics.RetrieveUpdateAPIView):
     Endpoint: api/dog/<int:pk>/<status>/next/
     """
 
-    permission_classes = [permissions.IsAuthenticated]
+    permission_class = [permissions.IsAuthenticated]
     authentication_class = [authentication.TokenAuthentication]
     queryset = models.Dog.objects.all()
     serializer_class = serializers.DogSerializer
