@@ -92,7 +92,7 @@ class UserDogStatusUpdateView(generics.UpdateAPIView):
             user_dog = self.queryset.create(
                 user=self.request.user, dog=dog_id, status=status
             )
-        return user_dog
+        return self.post(*args, **kwargs)
 
 
 class DogRetrieve(generics.RetrieveUpdateAPIView):
