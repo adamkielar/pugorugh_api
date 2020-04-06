@@ -44,11 +44,9 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
             pedigree__in=self.request.user.userpref.pedigree,
             fur__in=self.request.user.userpref.fur,
         )
-
-        models.UserDog.objects.filter(user=self.request.user).delete()
-        
         for dog in dogs:
-            models.UserDog.objects.create(user=self.request.user, dog=dog, status='u')
+            userdog = models.UserDog.objects.get_or_create(user=self.request.user, dog=dog, status='u')
+            userdog.save()
         return userpref
 
 
