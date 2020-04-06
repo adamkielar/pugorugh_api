@@ -138,8 +138,8 @@ class DogRetrieve(generics.RetrieveUpdateAPIView):
         return status_dogs
 
     def get_object(self):
-        status_dogs = self.get_queryset()
-        next_dogs = status_dogs.filter(id__gt=self.kwargs.get("pk")).order_by("pk")
+        status_dogs = self.get_queryset().order_by("pk")
+        next_dogs = status_dogs.filter(id__gt=self.kwargs.get("pk"))
         if next_dogs.exists():
             return next_dogs.first()
         if status_dogs.exists():
