@@ -35,7 +35,7 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
     serializer_class = serializers.UserPrefSerializer
 
     def get_object(self):
-        userpref = self.get_queryset().filter(user=self.request.user).first()
+        user_pref = self.get_queryset().filter(user=self.request.user).first()
 
         dogs = models.Dog.objects.filter(
             age_letter__in=self.request.user.userpref.age,
@@ -45,8 +45,8 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
             fur__in=self.request.user.userpref.fur,
         )
         for dog in dogs:
-            userdog = models.UserDog.objects.get_or_create(user=self.request.user, dog=dog, status='u')
-        return userpref
+            user_dog = models.UserDog.objects.get_or_create(user=self.request.user, dog=dog, status='u')
+        return user_pref
 
 
 class DogListView(generics.ListCreateAPIView):
@@ -70,9 +70,6 @@ class DeleteDogView(generics.DestroyAPIView):
     authentication_classes = [authentication.TokenAuthentication]
     serializer_class = serializers.DogSerializer
 
-    def perform_destroy(self, instance):
-        instance.delete()
-
 
 class UserDogStatusUpdateView(generics.UpdateAPIView):
     """
@@ -84,16 +81,16 @@ class UserDogStatusUpdateView(generics.UpdateAPIView):
     queryset = models.UserDog.objects.all()
     serializer_class = serializers.UserDogSerializer
 
-    def get_object(self):
+    def put(self, *args, **kwargs):
         dog_id = self.kwargs["pk"]
         status = self.kwargs["status"][0]
         try:
-            user_dog = self.queryset.get(user=self.request.user.id, dog_id=dog_id)
+            user_dog = self.queryset.get(user=self.request.user, dog=dog_id)
             user_dog.status = status
             user_dog.save()
-        except self.queryset.DoesNotExist:
+        except user_dog.DoesNotExist:
             user_dog = self.queryset.create(
-                user=self.request.user, dog_id=dog_id, status=status
+                user=self.request.user, dog=dog_id, status=status
             )
         return user_dog
 
@@ -110,7 +107,7 @@ class DogRetrieve(generics.RetrieveUpdateAPIView):
 
     def get_queryset(self):
         status = self.kwargs.get("status")[0]
-        userpref = models.UserPref.objects.get(user=self.request.user.id)
+        user_pref = models.UserPref.objects.get(user=self.request.user.id)
         status_dogs = self.queryset.filter(
             age_letter__in=self.request.user.userpref.age,
             gender__in=self.request.user.userpref.gender,
