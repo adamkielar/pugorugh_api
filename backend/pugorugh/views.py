@@ -43,16 +43,14 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
             pedigree__in=self.request.user.userpref.pedigree,
             fur__in=self.request.user.userpref.fur,
         )
-        if models.UserDog.objects.filter(user=self.request.user).exists():
-            for dog in dogs:
-                user_dog = models.UserDog.objects.update(
-                    user=self.request.user, dog=dog, status="u"
-                )
-        else:
-            for dog in dogs:
-                user_dog = models.UserDog.objects.create(
-                    user=self.request.user, dog=dog, status="u"
-                )
+        user_dog = models.UserDog.objects.filter(user=self.request.user)
+        if user_dog.exists():
+            user_dog.delete()
+
+        for dog in dogs:
+            user_dog = models.UserDog.objects.create(
+                user=self.request.user, dog=dog, status="u"
+            )
         return user_pref
 
 
@@ -99,7 +97,7 @@ class UserDogStatusUpdateView(generics.UpdateAPIView):
             user_dog = self.queryset.create(
                 user=self.request.user, dog=dog_id, status=status
             )
-        return self.post(*args, **kwargs)
+        return Response
 
 
 class DogRetrieve(generics.RetrieveUpdateAPIView):
