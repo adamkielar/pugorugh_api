@@ -29,7 +29,7 @@ urlpatterns = format_suffix_patterns(
             views.DogRetrieve.as_view(),
             name="dog-retrieve",
         ),
-        path("api/dog/add", views.CreateDogView.as_view(), name="create-dog"),
+        path("api/dog/add", views.DogListView.as_view(), name="create-dog"),
         path(
             "api/dog<int:pk>/delete", views.DeleteDogView.as_view(), name="delete-dog"
         ),

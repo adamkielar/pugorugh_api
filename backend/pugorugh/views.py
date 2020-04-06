@@ -52,24 +52,13 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
 class DogListView(generics.ListCreateAPIView):
     """
     Endpoint: /api/dog/
-    """
-
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = models.Dog.objects.all()
-    serializer_class = serializers.DogSerializer
-
-
-class CreateDogView(generics.CreateAPIView):
-    """
     Endpoint: /api/dog/add
     """
 
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [authentication.TokenAuthentication]
+    queryset = models.Dog.objects.all()
     serializer_class = serializers.DogSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
 
 
 class DeleteDogView(generics.DestroyAPIView):
