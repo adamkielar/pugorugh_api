@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import Http404
 
 
@@ -35,7 +34,7 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
     serializer_class = serializers.UserPrefSerializer
 
     def get_object(self):
-        user_pref = self.get_queryset().filter(user=self.request.user).first()
+        user_pref = self.queryset.filter(user=self.request.user).first()
 
         dogs = models.Dog.objects.filter(
             age_letter__in=self.request.user.userpref.age,
@@ -43,9 +42,17 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
             size__in=self.request.user.userpref.size,
             pedigree__in=self.request.user.userpref.pedigree,
             fur__in=self.request.user.userpref.fur,
-        )
-        for dog in dogs:
-            user_dog = models.UserDog.objects.get_or_create(user=self.request.user, dog=dog, status='u')
+        ).order_by('id')
+        if models.UserDog.objects.filter(user=self.request.user).exists():
+            for dog in dogs:
+                user_dog = models.UserDog.objects.update(
+                    user=self.request.user, dog=dog, status="u"
+                )
+        else:
+            for dog in dogs:
+                user_dog = models.UserDog.objects.create(
+                    user=self.request.user, dog=dog, status="u"
+                )
         return user_pref
 
 
@@ -88,7 +95,7 @@ class UserDogStatusUpdateView(generics.UpdateAPIView):
             user_dog = self.queryset.get(user=self.request.user, dog=dog_id)
             user_dog.status = status
             user_dog.save()
-        except user_dog.DoesNotExist:
+        except IndexError:
             user_dog = self.queryset.create(
                 user=self.request.user, dog=dog_id, status=status
             )
