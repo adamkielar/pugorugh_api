@@ -73,7 +73,7 @@ class DeleteDogView(generics.DestroyAPIView):
 
 class UserDogStatusUpdateView(generics.UpdateAPIView):
     """
-    Endpoint: /api/dog/<int:pk>/<status>  (liked or disliked)
+    Endpoint: /api/dog/<int:pk>/<status>  (liked or disliked or undecided)
     """
 
     permission_classes = [permissions.IsAuthenticated]
@@ -92,7 +92,7 @@ class UserDogStatusUpdateView(generics.UpdateAPIView):
             user_dog = self.queryset.create(
                 user=self.request.user, dog=dog_id, status=status
             )
-        return user_dog.post(*args, **kwargs)
+        return user_dog
 
 
 class DogRetrieve(generics.RetrieveUpdateAPIView):
