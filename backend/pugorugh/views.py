@@ -42,7 +42,7 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
             size__in=self.request.user.userpref.size,
             pedigree__in=self.request.user.userpref.pedigree,
             fur__in=self.request.user.userpref.fur,
-        ).order_by('id')
+        )
         if models.UserDog.objects.filter(user=self.request.user).exists():
             for dog in dogs:
                 user_dog = models.UserDog.objects.update(
@@ -139,7 +139,7 @@ class DogRetrieve(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         status_dogs = self.get_queryset()
-        next_dogs = status_dogs.filter(id__gt=self.kwargs.get("pk"))
+        next_dogs = status_dogs.filter(id__gt=self.kwargs.get("pk")).order_by("pk")
         if next_dogs.exists():
             return next_dogs.first()
         if status_dogs.exists():
