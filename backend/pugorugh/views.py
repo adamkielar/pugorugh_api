@@ -37,11 +37,11 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
         user_pref = self.queryset.filter(user=self.request.user).first()
 
         dogs = models.Dog.objects.filter(
-            age_letter__in=self.request.user.userpref.age,
-            gender__in=self.request.user.userpref.gender,
-            size__in=self.request.user.userpref.size,
-            pedigree__in=self.request.user.userpref.pedigree,
-            fur__in=self.request.user.userpref.fur,
+            age_letter__in=self.request.user.userpref.age.split(","),
+            gender__in=self.request.user.userpref.gender.split(","),
+            size__in=self.request.user.userpref.size.split(","),
+            pedigree__in=self.request.user.userpref.pedigree.split(","),
+            fur__in=self.request.user.userpref.fur.split(","),
         )
         
         for dog in dogs:
@@ -110,11 +110,11 @@ class DogRetrieve(generics.RetrieveUpdateAPIView):
         status = self.kwargs.get("status")[0]
         user_pref = models.UserPref.objects.get(user=self.request.user.id)
         status_dogs = self.queryset.filter(
-            age_letter__in=self.request.user.userpref.age,
-            gender__in=self.request.user.userpref.gender,
-            size__in=self.request.user.userpref.size,
-            pedigree__in=self.request.user.userpref.pedigree,
-            fur__in=self.request.user.userpref.fur,
+            age_letter__in=self.request.user.userpref.age.split(","),
+            gender__in=self.request.user.userpref.gender.split(","),
+            size__in=self.request.user.userpref.size.split(","),
+            pedigree__in=self.request.user.userpref.pedigree.split(","),
+            fur__in=self.request.user.userpref.fur.split(","),
         )
 
         if status == "u":
