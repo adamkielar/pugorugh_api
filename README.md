@@ -12,10 +12,15 @@ b) docker-compose build
 c) docker-compose up
 d) to access postgresql database:  docker-compose exec db psql --username=postgres --dbname=postgres
 
-2. Virtualenv
+2. Virtualenv:
 a) python3 -m venv env
 b) source ./env/bin/activate
 c) pip install --upgrade pip && pip install -r requirements.txt
 d) python manage.py migrate
 e) python pugorugh/scripts/data_import.py #load sample data
 f) python manage.py runserver 0.0.0.0:8000
+
+3. Testing:
+a) coverage run manage.py test pugorugh.tests
+b) coverage report
+c) using travis-ci.org for autotesting when code added to github

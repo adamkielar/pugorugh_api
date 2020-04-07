@@ -43,9 +43,11 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
             pedigree__in=self.request.user.userpref.pedigree.split(","),
             fur__in=self.request.user.userpref.fur.split(","),
         )
-        
+
         for dog in dogs:
-                models.UserDog.objects.update_or_create(user=self.request.user, dog=dog, status="u")
+            models.UserDog.objects.update_or_create(
+                user=self.request.user, dog=dog, status="u"
+            )
         return user_pref
 
 
@@ -60,6 +62,9 @@ class DogListAddView(generics.ListCreateAPIView):
     queryset = models.Dog.objects.all()
     serializer_class = serializers.DogSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class DeleteDogView(generics.DestroyAPIView):
     """
@@ -69,6 +74,9 @@ class DeleteDogView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [authentication.TokenAuthentication]
     serializer_class = serializers.DogSerializer
+
+    def perform_destroy(self, instance):
+        instance.delete()
 
 
 class UserDogStatusUpdateView(generics.UpdateAPIView):
@@ -119,15 +127,15 @@ class DogRetrieve(generics.RetrieveUpdateAPIView):
 
         if status == "u":
             status_dogs = status_dogs.filter(
-                userdog__status__exact="u", userdog__user=self.request.user.id
+                userdog__status__exact="u", userdog__user=self.request.user
             )
         elif status == "l":
             status_dogs = status_dogs.filter(
-                userdog__status__exact="l", userdog__user=self.request.user.id
+                userdog__status__exact="l", userdog__user=self.request.user
             )
         else:
             status_dogs = status_dogs.filter(
-                userdog__status__exact="d", userdog__user=self.request.user.id
+                userdog__status__exact="d", userdog__user=self.request.user
             )
         return status_dogs
 
