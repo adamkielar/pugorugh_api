@@ -1,7 +1,6 @@
 GENDER_CHOICES = (
     ('m', 'male'),
     ('f', 'female'),
-    ('u', 'unknown'),
 )
 
 SIZE_CHOICES = (
@@ -9,7 +8,6 @@ SIZE_CHOICES = (
     ('m', 'medium'),
     ('l', 'large'),
     ('xl', 'extra large'),
-    ('u', 'unknown'),
 )
 
 STATUS_CHOICES = (

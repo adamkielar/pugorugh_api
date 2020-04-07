@@ -37,8 +37,8 @@ class Dog(models.Model):
 class UserPref(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     age = models.CharField(max_length=60, default="b,y,a,s")
-    gender = models.CharField(max_length=60, default="m,f,u")
-    size = models.CharField(max_length=60, default="s,m,l,xl,u")
+    gender = models.CharField(max_length=60, default="m,f")
+    size = models.CharField(max_length=60, default="s,m,l,xl")
     pedigree = models.CharField(max_length=60, default="y,n")
     fur = models.CharField(max_length=60, default="l,s")
 
