@@ -18,7 +18,7 @@ urlpatterns = format_suffix_patterns(
             views.UserPreferencesView.as_view(),
             name="preferences",
         ),
-        path("api/dog/", views.DogListView.as_view(), name="dog-list"),
+        path("api/dog/", views.DogListAddView.as_view(), name="dog-list"),
         re_path(
             r"^api/dog/(?P<pk>-?\d+)/(?P<status>liked|disliked|undecided)/$",
             views.UserDogStatusUpdateView.as_view(),
@@ -29,7 +29,7 @@ urlpatterns = format_suffix_patterns(
             views.DogRetrieve.as_view(),
             name="dog-retrieve",
         ),
-        path("api/dog/add", views.DogListView.as_view(), name="create-dog"),
+        path("api/dog/add", views.DogListAddView.as_view(), name="create-dog"),
         path(
             "api/dog<int:pk>/delete", views.DeleteDogView.as_view(), name="delete-dog"
         ),

@@ -49,7 +49,7 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
         return user_pref
 
 
-class DogListView(generics.ListCreateAPIView):
+class DogListAddView(generics.ListCreateAPIView):
     """
     Endpoint: /api/dog/
     Endpoint: /api/dog/add

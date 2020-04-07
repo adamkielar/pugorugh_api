@@ -15,7 +15,7 @@ var Dog = React.createClass({
   },
   getNext: function () {
     this.serverRequest = $.ajax({
-      url: `api/dog/${ this.state.details ? this.state.details.id : -1 }/${ this.state.filter }/next/`,
+      url: `api/dog/${this.state.details ? this.state.details.id : -1}/${this.state.filter}/next/`,
       method: "GET",
       dataType: "json",
       headers: TokenAuth.getAuthHeader()
@@ -27,7 +27,7 @@ var Dog = React.createClass({
         if (this.state.filter == "undecided") {
           message = "No dogs matched your preferences.";
         } else {
-          message = `You don't have any ${ this.state.filter } dogs.`;
+          message = `You don't have any ${this.state.filter} dogs.`;
         }
       } else {
         message = response.error;
@@ -37,7 +37,7 @@ var Dog = React.createClass({
   },
   changeDogStatus: function (newStatus) {
     this.serverRequest = $.ajax({
-      url: `api/dog/${ this.state.details.id }/${ newStatus }/`,
+      url: `api/dog/${this.state.details.id}/${newStatus}/`,
       method: "PUT",
       dataType: "json",
       headers: TokenAuth.getAuthHeader()
@@ -160,14 +160,18 @@ var Dog = React.createClass({
         "p",
         { className: "dog-card" },
         this.state.details.name,
-        "•",
+        " • ",
         this.state.details.breed,
-        "•",
+        " • ",
         this.state.details.age,
         " Months•",
         this.genderLookup[this.state.details.gender],
         "•",
-        this.sizeLookup[this.state.details.size]
+        this.sizeLookup[this.state.details.size],
+        "•Pedigree:",
+        this.pedigreeLookup[this.state.details.pedigree],
+        "    Fur:",
+        this.furLookup[this.state.details.fur]
       ),
       this.dogControls()
     );
