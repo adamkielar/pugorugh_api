@@ -11,12 +11,19 @@ from rest_framework.test import (
 )
 
 from pugorugh.models import Dog, UserPref, UserDog
-from pugorugh.views import UserRegisterView, UserPreferencesView, DogListAddView, DeleteDogView
+from pugorugh.views import (
+    UserRegisterView,
+    UserPreferencesView,
+    DogListAddView,
+    DeleteDogView,
+    UserDogStatusUpdateView,
+    DogRetrieve
+)
 
 
 class APIViewsTests(APITestCase):
     def setUp(self):
-        self.factory = APIRequestFactory()
+        self.factory = APIRequestFactory(enforce_csrf_checks=True)
         self.apiclient = APIClient()
         self.user = User.objects.create(username="adam", password="testpass")
         self.dog = Dog.objects.create(
@@ -91,3 +98,26 @@ class APIViewsTests(APITestCase):
         response = self.apiclient.delete("delete-dog", pk=dog_id)
         self.apiclient.force_authenticate(user=self.user)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_userdog_status_update_view(self):
+        view = UserDogStatusUpdateView.as_view()
+        dog_id = Dog.objects.get(id=self.dog.id)
+        user_dog = UserDog.objects.filter(user=self.user, dog=dog_id, status=self.user_dog.status)
+        self.assertEqual(user_dog.count(), 1)
+        data = {
+            "pk": self.dog.id,
+            "status": "liked",
+        }
+        request = self.factory.put("dog-update", data)
+        force_authenticate(request, user=self.user)
+        response = view(request, pk=self.dog.id, status=self.user_dog.status)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_dog_retrieve_view(self):
+        view = DogRetrieve.as_view()
+        dog_id = Dog.objects.get(id=self.dog.id)
+        user_dog = UserDog.objects.filter(user=self.user, dog=dog_id, status=self.user_dog.status)
+        request = self.factory.get("dog-retrieve")
+        force_authenticate(request, user=self.user)
+        response = view(request, status=self.user_dog.status, pk=self.dog.id)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
