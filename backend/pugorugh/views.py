@@ -15,6 +15,7 @@ from . import serializers
 
 class UserRegisterView(generics.CreateAPIView):
     """
+    User registration view(username, password)
     Endpoint: /api/user/
     """
 
@@ -25,6 +26,8 @@ class UserRegisterView(generics.CreateAPIView):
 
 class UserPreferencesView(generics.RetrieveUpdateAPIView):
     """
+    User can choose which dogs he likes to see.
+    Preference options (age, gender, size, pedigree, fur)
     api/user/preferences/
     """
 
@@ -53,6 +56,8 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
 
 class DogListAddView(generics.ListCreateAPIView):
     """
+    User can list all dog and he can add new dog.
+    React view not provided for this project
     Endpoint: /api/dog/
     Endpoint: /api/dog/add
     """
@@ -68,6 +73,8 @@ class DogListAddView(generics.ListCreateAPIView):
 
 class DeleteDogView(generics.DestroyAPIView):
     """
+    User can delete dog.
+    React view not provided for this project
     Endpoint: /api/dog/<int:pk>/delete
     """
 
@@ -81,6 +88,7 @@ class DeleteDogView(generics.DestroyAPIView):
 
 class UserDogStatusUpdateView(generics.UpdateAPIView):
     """
+    User can mark which dog he likes, dislikes or if he is undecided what to choose.
     Endpoint: /api/dog/<int:pk>/<status>  (liked or disliked or undecided)
     """
 
@@ -106,6 +114,7 @@ class UserDogStatusUpdateView(generics.UpdateAPIView):
 
 class DogRetrieve(generics.RetrieveUpdateAPIView):
     """
+    View were you find matching dog for current user, according to status set by user. 
     Endpoint: api/dog/<int:pk>/<status>/next/
     """
 

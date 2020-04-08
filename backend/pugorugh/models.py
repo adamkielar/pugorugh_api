@@ -7,6 +7,11 @@ from . import choices
 
 
 class Dog(models.Model):
+    """
+    Model for Dog instance.
+    Rewrote save() function to convert integer age to letter.
+    age_letter field added to store that letter
+    """
     name = models.CharField(max_length=255, blank=False)
     description = models.TextField(blank=True)
     image_filename = models.CharField(max_length=255, blank=True)
