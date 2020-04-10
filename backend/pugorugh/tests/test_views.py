@@ -112,6 +112,7 @@ class APIViewsTests(APITestCase):
         force_authenticate(request, user=self.user)
         response = view(request, pk=self.dog.id, status=self.user_dog.status)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(self.user_dog.status, "liked")
 
     def test_dog_retrieve_view(self):
         view = DogRetrieve.as_view()
