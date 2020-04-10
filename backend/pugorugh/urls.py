@@ -31,7 +31,7 @@ urlpatterns = format_suffix_patterns(
         ),
         path("api/dog/add", views.DogListAddView.as_view(), name="create-dog"),
         path(
-            "api/dog<int:pk>/delete", views.DeleteDogView.as_view(), name="delete-dog"
+            "api/dog/<int:pk>/delete", views.DeleteDogView.as_view(), name="delete-dog"
         ),
         path(
             "favicon.ico",

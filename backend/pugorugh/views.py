@@ -65,6 +65,7 @@ class DeleteDogView(generics.DestroyAPIView):
 
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [authentication.TokenAuthentication]
+    queryset = models.Dog.objects.all()
     serializer_class = serializers.DogSerializer
 
 
