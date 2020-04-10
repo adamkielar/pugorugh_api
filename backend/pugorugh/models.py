@@ -20,7 +20,8 @@ class Dog(models.Model):
     age_letter = models.CharField(max_length=1, blank=True)
     gender = models.CharField(max_length=60, choices=choices.GENDER_CHOICES)
     size = models.CharField(max_length=60, choices=choices.SIZE_CHOICES)
-    pedigree = models.CharField(max_length=60, choices=choices.PEDIGREE_CHOICES)
+    pedigree = models.CharField(max_length=60,
+                                choices=choices.PEDIGREE_CHOICES)
     fur = models.CharField(max_length=60, choices=choices.FUR_CHOICES)
 
     def __str__(self):
@@ -38,7 +39,6 @@ class Dog(models.Model):
         super(Dog, self).save(*args, **kwargs)
 
 
-
 class UserPref(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     age = models.CharField(max_length=60, default="b,y,a,s")
@@ -54,12 +54,10 @@ def create_user_userpref(sender, instance=None, created=None, **kwargs):
         UserPref.objects.create(user=instance)
 
 
-@receiver(post_save, sender=User)
-def save_user_userpref(sender, instance, **kwargs):
-    instance.userpref.save()
-
-
 class UserDog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     status = models.CharField(max_length=1, choices=choices.STATUS_CHOICES)
+
+    class Meta:
+        unique_together = ["user", "dog"]

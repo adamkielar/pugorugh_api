@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import Http404
-
 
 from rest_framework import authentication
 from rest_framework import generics
@@ -19,7 +19,7 @@ class UserRegisterView(generics.CreateAPIView):
     Endpoint: /api/user/
     """
 
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny, )
     model = get_user_model()
     serializer_class = serializers.UserSerializer
 
@@ -39,18 +39,6 @@ class UserPreferencesView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         user_pref = self.queryset.filter(user=self.request.user).first()
 
-        dogs = models.Dog.objects.filter(
-            age_letter__in=self.request.user.userpref.age.split(","),
-            gender__in=self.request.user.userpref.gender.split(","),
-            size__in=self.request.user.userpref.size.split(","),
-            pedigree__in=self.request.user.userpref.pedigree.split(","),
-            fur__in=self.request.user.userpref.fur.split(","),
-        )
-
-        for dog in dogs:
-            models.UserDog.objects.update_or_create(
-                user=self.request.user, dog=dog, status="u"
-            )
         return user_pref
 
 
@@ -67,9 +55,6 @@ class DogListAddView(generics.ListCreateAPIView):
     queryset = models.Dog.objects.all()
     serializer_class = serializers.DogSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
 
 class DeleteDogView(generics.DestroyAPIView):
     """
@@ -82,11 +67,8 @@ class DeleteDogView(generics.DestroyAPIView):
     authentication_classes = [authentication.TokenAuthentication]
     serializer_class = serializers.DogSerializer
 
-    def perform_destroy(self, instance):
-        instance.delete()
 
-
-class UserDogStatusUpdateView(generics.UpdateAPIView):
+class UserDogStatusUpdateView(generics.RetrieveUpdateAPIView):
     """
     User can mark which dog he likes, dislikes or if he is undecided what to choose.
     Endpoint: /api/dog/<int:pk>/<status>  (liked or disliked or undecided)
@@ -100,14 +82,15 @@ class UserDogStatusUpdateView(generics.UpdateAPIView):
     def put(self, *args, **kwargs):
         dog_id = self.kwargs["pk"]
         status = self.kwargs["status"][0]
+
         try:
             user_dog = self.queryset.get(user=self.request.user, dog=dog_id)
             user_dog.status = status
             user_dog.save()
-        except IndexError:
-            user_dog = self.queryset.create(
-                user=self.request.user, dog=dog_id, status=status
-            )
+        except ObjectDoesNotExist:
+            user_dog = self.queryset.create(user=self.request.user,
+                                            dog=dog_id,
+                                            status=status)
         serializer = serializers.UserDogSerializer(user_dog)
         return Response(serializer.data)
 
@@ -135,17 +118,14 @@ class DogRetrieve(generics.RetrieveUpdateAPIView):
         )
 
         if status == "u":
-            status_dogs = status_dogs.filter(
-                userdog__status__exact="u", userdog__user=self.request.user
-            )
+            status_dogs = status_dogs.filter(userdog__status__exact="u",
+                                             userdog__user=self.request.user)
         elif status == "l":
-            status_dogs = status_dogs.filter(
-                userdog__status__exact="l", userdog__user=self.request.user
-            )
+            status_dogs = status_dogs.filter(userdog__status__exact="l",
+                                             userdog__user=self.request.user)
         else:
-            status_dogs = status_dogs.filter(
-                userdog__status__exact="d", userdog__user=self.request.user
-            )
+            status_dogs = status_dogs.filter(userdog__status__exact="d",
+                                             userdog__user=self.request.user)
         return status_dogs
 
     def get_object(self):
