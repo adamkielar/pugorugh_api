@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
 from django.shortcuts import Http404
 
 from rest_framework import authentication
@@ -130,6 +131,13 @@ class DogRetrieve(generics.RetrieveUpdateAPIView):
         return status_dogs
 
     def get_object(self):
+        try:
+            for dog in models.Dog.objects.all():
+                user_dog = models.UserDog.objects.get_or_create(
+                    user=self.request.user, dog=dog, status='u')
+        except IntegrityError:
+            pass
+
         status_dogs = self.get_queryset()
         next_dogs = status_dogs.filter(id__gt=self.kwargs.get("pk"))
         if next_dogs.exists():

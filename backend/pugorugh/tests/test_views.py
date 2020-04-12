@@ -11,14 +11,9 @@ from rest_framework.test import (
 )
 
 from pugorugh.models import Dog, UserPref, UserDog
-from pugorugh.views import (
-    UserRegisterView,
-    UserPreferencesView,
-    DogListAddView,
-    DeleteDogView,
-    UserDogStatusUpdateView,
-    DogRetrieve
-)
+from pugorugh.views import (UserRegisterView, UserPreferencesView,
+                            DogListAddView, DeleteDogView,
+                            UserDogStatusUpdateView, DogRetrieve)
 
 
 class APIViewsTests(APITestCase):
@@ -36,10 +31,10 @@ class APIViewsTests(APITestCase):
             pedigree="y",
             fur="s",
         )
-        self.user_dog = UserDog.objects.create(user=self.user, dog=self.dog, status="l")
+        self.user_dog = UserDog.objects.create(user=self.user,
+                                               dog=self.dog,
+                                               status="l")
 
-        # self.token = Token.objects.create(user=self.user)
-        # self.token = Token.objects.get(user__username="adam")
 
     def test_user_register_view(self):
         view = UserRegisterView.as_view()
@@ -102,7 +97,9 @@ class APIViewsTests(APITestCase):
     def test_userdog_status_update_view(self):
         view = UserDogStatusUpdateView.as_view()
         dog_id = Dog.objects.get(id=self.dog.id)
-        user_dog = UserDog.objects.filter(user=self.user, dog=dog_id, status=self.user_dog.status)
+        user_dog = UserDog.objects.filter(user=self.user,
+                                          dog=dog_id,
+                                          status=self.user_dog.status)
         self.assertEqual(user_dog.count(), 1)
         data = {
             "pk": self.dog.id,
@@ -117,7 +114,9 @@ class APIViewsTests(APITestCase):
     def test_dog_retrieve_view(self):
         view = DogRetrieve.as_view()
         dog_id = Dog.objects.get(id=self.dog.id)
-        user_dog = UserDog.objects.filter(user=self.user, dog=dog_id, status=self.user_dog.status)
+        user_dog = UserDog.objects.filter(user=self.user,
+                                          dog=dog_id,
+                                          status=self.user_dog.status)
         request = self.factory.get("dog-retrieve")
         force_authenticate(request, user=self.user)
         response = view(request, status=self.user_dog.status, pk=self.dog.id)
