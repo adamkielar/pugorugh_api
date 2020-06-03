@@ -1,27 +1,37 @@
-# pugorugh_api
+#                              Dogs Catalog | Python, Django, Django REST framework, Angular
+
+## Description
+
 This app helps potential pet owners find the dog of their dreams!
-You can find project guidelines in project_tasks.md .
+You can find project guidelines in project_tasks.md . 
+Registered users can set thier dog requirements like gender, age, size, fur and breed
 
+## Technologies and Packages Used in App
 
-#Installation:
+* Django
+* Postgres and SqLite
+* [Django REST framework](https://www.django-rest-framework.org/)
+* Angular
+
+## How to use:
 
 git clone <project>
 
 1. Docker:
-a) docker build .
-b) docker-compose build
-c) docker-compose up
-d) to access postgresql database:  docker-compose exec db psql --username=postgres --dbname=postgres
+* docker build .
+* docker-compose build
+* docker-compose up
+* to access postgresql database:  docker-compose exec db psql --username=postgres --dbname=postgres
 
 2. Virtualenv:
-a) python3 -m venv env
-b) source ./env/bin/activate
-c) pip install --upgrade pip && pip install -r requirements.txt
-d) python manage.py migrate
-e) python pugorugh/scripts/data_import.py #load sample data
-f) python manage.py runserver 0.0.0.0:8000
+* python3 -m venv env
+* source ./env/bin/activate
+* pip install --upgrade pip && pip install -r requirements.txt
+* python manage.py migrate
+* python pugorugh/scripts/data_import.py (load sample data)
+* python manage.py runserver 0.0.0.0:8000
 
 3. Testing:
-a) coverage run manage.py test pugorugh.tests
-b) coverage report
-c) using travis-ci.org for autotesting when code added to github
+* coverage run manage.py test pugorugh.tests
+* coverage report
+* using travis-ci.org for autotesting when code added to github
