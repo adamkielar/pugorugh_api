@@ -1,4 +1,4 @@
-#                              Dogs Catalog | Python, Django, Django REST framework, Angular
+#                              Dogs Catalog | Python, Django, Django REST framework, React
 
 ## Description
 
@@ -11,7 +11,7 @@ Registered users can set thier dog requirements like gender, age, size, fur and 
 * Django
 * Postgres and SqLite
 * [Django REST framework](https://www.django-rest-framework.org/)
-* Angular
+* React
 
 ## How to use:
 
