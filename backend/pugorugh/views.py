@@ -5,9 +5,7 @@ from django.shortcuts import Http404
 
 from rest_framework import authentication
 from rest_framework import generics
-from rest_framework import mixins
 from rest_framework import permissions
-from rest_framework import viewsets
 from rest_framework.response import Response
 
 from . import models
@@ -20,7 +18,7 @@ class UserRegisterView(generics.CreateAPIView):
     Endpoint: /api/user/
     """
 
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny,)
     model = get_user_model()
     serializer_class = serializers.UserSerializer
 
@@ -99,7 +97,8 @@ class UserDogStatusUpdateView(generics.RetrieveUpdateAPIView):
 
 class DogRetrieve(generics.RetrieveUpdateAPIView):
     """
-    View were you find matching dog for current user, according to status set by user. 
+    View were you find matching dog for current user,
+    according to status set by user.
     Endpoint: api/dog/<int:pk>/<status>/next/
     """
 

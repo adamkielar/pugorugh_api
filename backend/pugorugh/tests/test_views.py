@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
-from django.urls import reverse
 
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from rest_framework.test import (
     APIClient,
     APIRequestFactory,
@@ -34,7 +32,6 @@ class APIViewsTests(APITestCase):
         self.user_dog = UserDog.objects.create(user=self.user,
                                                dog=self.dog,
                                                status="l")
-
 
     def test_user_register_view(self):
         view = UserRegisterView.as_view()
