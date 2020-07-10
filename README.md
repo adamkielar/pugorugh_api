@@ -18,8 +18,6 @@ Registered users can set thier dog requirements like gender, age, size, fur and 
 git clone <project>
 
 1. Docker:
-* docker build .
-* docker-compose build
 * docker-compose up
 * to access postgresql database:  docker-compose exec db psql --username=postgres --dbname=postgres
 

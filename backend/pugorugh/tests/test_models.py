@@ -7,7 +7,7 @@ from pugorugh.models import Dog, UserPref, UserDog
 class UserDogModelTests(TestCase):
     def setUp(self):
         self.user = User.objects.create(
-            username="adam", 
+            username="adam",
             password="drkiler",
         )
         self.dog = Dog.objects.create(
@@ -20,8 +20,8 @@ class UserDogModelTests(TestCase):
             fur="s",
         )
         self.user_dog = UserDog.objects.create(
-            user=self.user, 
-            dog=self.dog, 
+            user=self.user,
+            dog=self.dog,
             status="l"
         )
 
